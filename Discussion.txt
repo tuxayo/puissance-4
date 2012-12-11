@@ -1,0 +1,70 @@
+Jérémie : A ce que je vois le programme foire sous windows. Les fonctions qui gèrent 
+l'effacement de l'écran et les couleurs ne fonctionnent pas; résultat à chaque coup 
+la nouvelle grille se rajoute après l'ancienne au lieu de l'effacer avec en prime la 
+ligne de code qui n'est pas traitée. Cela dis ça n'empêche pas le programme de fonctionner. 
+Sous linux ya pas de problème.
+
+Pour l'instant j'ai penser aux améliorations suivantes :
+-Créer une IA avec ensuite un choix entre un mode IA et un mode VS
+-Signaler la combinaison gagnante. Par exemple faire clignoter les pions 
+(effacer, afficher, effacer, afficher). Mais ça nécessite une notion de 
+temp(orisation)s et je sais pas si c'est possible en C++
+-Le comptage des points (parties gagnées) avec le choix du nombre de manches
+
+Bien sûr yen a encore plein auxquelles j'ai pas pensé
+-----------------------------------------------------
+
+Jérémie : Pour l'IA faudrai s'inspirer de la forme des fonctions TestVictoire, on les a pas encore faites mais je vois à quoi ça ressemble. Ya une victoire si ya un alignement de 4 pions identiques, le problème est de trouver les formules pour trouver ces alignements. Mettons de coté ce problème. En utilisant la forme des fonctions TestVictoire donc, on trouve les alignements de 3 pions identiques (appartenant à l'IA) qui peuvent être compléter et l'IA va placer son pion. Après ya différent niveau on va dire. Soit l'IA trouve un alignement complètable(??) et place son pion, dans le cas contraire il le place au hasard, soit il cherche, à défaut d'alignement complètables, à remplir les colonnes en vue de remplir les alignements mais ça ça semble super complexe :/
+-----------------------------------
+
+Antoine: L'IA serait à faire à la fin je pense, les autres caractéristiques doivent être nos priorités
+------------------
+
+Antoine: Mais donc ça y est tous les tests fonctionnent alors ?	
+------------------------------------------------------
+
+Jérémie : Il faut encore faire le test en diagonale, le plus dur. Et on avait oublié de penser à faire en sorte que l'IA contrecarre nos coups. Si on a aligné trois pions faut que l'IA remplisse la case
+-------------------------------
+
+Antoine :Je veux bien me pencher sur une fonction pour le test en diagonale demain :)
+-------------------------------------------------------------------------------------
+
+Jérémie : Je me repencherai dessus dimanche. J'ai eu une idée pour afficher en couleur je verrai ça
+--------------------
+
+Antoine : je m'occupe de la diagonale et toi des couleurs pour le moment ?
+--------------------------------------------------------------------------
+
+Jérémie : Couleurs opérationelles =)
+-------------------------------------------------------------------------
+
+Antoine : Yeah ! n'oublie pas de rajouter dans le dernier fichier ;)
+-----------------------------------------------------------------------
+
+Jérémie : Quel fichier?
+-----------------------
+
+Antoine : ouvre le fichier A LIRE
+-------------------------
+
+Jérémie : Ah ça c'est déjà signalé ^^
+---------------------------------------
+
+Antoine : Ok j'avais pas vu tu l'as deja fais apparement !
+--------------------------
+
+Jérémie : J'ai rajouter l'afficher des points d'une partie en trois manches gagnantes. Par contre jvoulais rajouter à chaque fois "Joueur 1 ou 2 a gagné la manche" mais ça s'affiche pas
+-----------------------------
+------------------------
+_________________________________________________________
+Victor: -Y'a une redondance dans le code des trois test elle à l'air d'être enlevable facilement
+-Est-ce ça serai mieu de changer le nom des colonnes en A Z E R T Y ? ça serai plus commode pour jouer
+________________________________________________________________
+Nicolas:Faire en Sorte de pouvoir entrer son propre pseudo à la place de Joueur1 et joueur2, de manière à faire un truc plus jolie.
+________________________________________________________________
+
+J'ai colorié chaque pipe, tiret, X et O un par un alors jveux rien entendre sur mon screen x) (je sais qu'il faut que je modifie les parametres d'enrigstrement mais tjrs la flemme)
+----------
+Victor: Tu l'a fait à la main?!
+-------
+Jérémie: Photofiltre
