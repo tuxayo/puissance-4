@@ -68,3 +68,5 @@ J'ai colorié chaque pipe, tiret, X et O un par un alors jveux rien entendre sur 
 Victor: Tu l'a fait à la main?!
 -------
 Jérémie: Photofiltre
+_______________________________________________
+Victor: Je tente de mettre le projet sous git pour en facilité la gestion
