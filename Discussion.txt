@@ -68,5 +68,22 @@ J'ai colorié chaque pipe, tiret, X et O un par un alors jveux rien entendre sur 
 Victor: Tu l'a fait à la main?!
 -------
 Jérémie: Photofiltre
-_______________________________________________
-Victor: Je tente de mettre le projet sous git pour en facilité la gestion
+---------------------------------------
+Antoine : Putain génial quand la colonne n'existe pas ça change pas de joueur, et les couleurs WAHOU ! Bien joué les gars ça prend vraiment forme :D
+---------------------------------------
+---
+
+Antoine : Bug Détécté : si on arrive en haut d'une colonne complete et que on veut encore jouer ok ca change de joueur.. Mais en plus dans le compteur associé à "match nul" ca continue d'incrémenter ! ainsi on peut se retrouver avec un match nul comme sur la photo Matchnul.png
+------------------------
+Jérémie : On a commencé à bosser dessus avec Victor mais ctait plus compliqué que prévu :/
+----------------------
+Antoine : Qqn peut m'aider à trouver d'où vient un segmentation fault ? (pour ma diago, elle marche mais plutot que devoir en faire plusieur j'essaie de faire qqch qui fait varier les colonnes mais, syntaxement ça me semble bon et pourtant quand je veux rentrer une colonne pour placer un pion j'ai segmetation fault)
+	Enfin, si je fais pour une seul colonne la fonction fonctionne très bien...
+				fichier : faischier.cxx
+---------------------------------------------------
+
+Jérémie : Je laisse tomber pour l'instant le clignotement du score du gagnant ça ne fonctionne pas ça me les brise
+
+C'est incompréhensible le segmentation fault. Le test diagonale s'effectue après le placement du pion pourtant il ne se place même pas dans la grille
+----------------------
+Antoine : donc je vais faire plusieurs fonctions ...

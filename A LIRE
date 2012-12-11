@@ -35,3 +35,6 @@ Jérémie: Ajout de "a gagné en X coups"
 
 10/12/12 15h33 Jérémie: Scores en couleur
 10/12/12 23h38 Jérémie: Vraie grille colorée
+2012-12-10 19h20 Victor: Avec Jérémie on à refait positionne jeton y'a quelques améliorations mais une régrésion: En haut il detecte des victoires pour rien
+Antoine : Peut etre pas return 0 mais autre chose ? Quand on return 0 en principe c'est que c'est bon ???
+Victor: Oui ça veux dire que tout à bien marché ça sert pour communiquer entre des programmes

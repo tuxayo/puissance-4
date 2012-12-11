@@ -144,80 +144,78 @@ namespace
 		}
 		return Str;
 	} //Pseudo ()
-
-	void PositionneJeton (CVMatrice & Mat, const unsigned NumCol,
-				unsigned & NumLi, const bool CoupDuJoueur1,
-			    unsigned & NbCoups1, unsigned & NbCoups2)
-	{
-			NumLi = 6;
-			while (true)
-			{
-				if ((Mat [NumLi][NumCol] == ' ') /*& (NumLi!=0)*/)
+	void PositionneJeton (CVMatrice & Mat, const unsigned NumCol, unsigned & NumLi,
+					bool & CoupDuJoueur1,unsigned & NbCoups1,
+					unsigned & NbCoups2, unsigned & NbCase)
+		{
+			NumLi = Mat.size () - 1;
+			while (NumLi > 0 && (Mat [NumLi][NumCol] != ' '))
+				--NumLi;
+			if (NumLi ==0 && (Mat [NumLi][NumCol] != ' '))
 				{
-					if (CoupDuJoueur1)
+					CoupDuJoueur1 = !CoupDuJoueur1;
+					return;
+				}
+			Mat [NumLi][NumCol] = (CoupDuJoueur1 ? 'X' : 'O'); // Place le pion correspondant au joueur
+			++NbCase;
+			if (CoupDuJoueur1)
+				{
+					++NbCoups1;
+				}
+			else
+				{
+					++NbCoups2;
+				}
+		} //PositionneJeton ()
+
+				/*NumLi = 6;		//On par de la case d'en bas
+				while (true)
+				{
+					if ((Mat [NumLi][NumCol] == ' ') )	//test si la case est vide
 					{
-						Mat [NumLi][NumCol] = 'X';
-						++NbCoups1;
+						if (CoupDuJoueur1)
+						{
+							Mat [NumLi][NumCol] = 'X';
+							++NbCoups1;
+							++NbCase;
+							break;
+						}
+						else
+						{
+							Mat [NumLi][NumCol] = 'O';
+							++NbCoups2;
+							++NbCase;
+							break;
+						}
+					}
+					else if (NumLi ==0)
+					{
+						CoupDuJoueur1 = !CoupDuJoueur1;
 						break;
 					}
 					else
 					{
-						Mat [NumLi][NumCol] = 'O';
-						++NbCoups2;
-						break;
+						--NumLi;
 					}
-				}
-				else
-				{
-					if (NumLi == 0)
-					{
-						break;
-					}
-					--NumLi;
-				}
-			} // End while
-	} // PositionneJeton ()
+				}*/
 
-	bool TestVictoireColonne (const CVMatrice & Mat, const unsigned NumLi, const unsigned NumCol, const bool CoupDuJoueur1)
+	bool TestVictoireColonne (const CVMatrice& Mat, const unsigned NumLi, const unsigned NumCol, const bool CoupDuJoueur1)
 	{
-		if (NumLi > 3) return 0; // Si la colonne comporte moins de 3 pions, pas la peine de tester
-		char CaracRecherche;
-		if (CoupDuJoueur1)
-		{
-			CaracRecherche = 'X';
-		}
-		else
-		{
-			CaracRecherche = 'O';
-		}
-		unsigned Ligne = NumLi + 1;
-		while ((Ligne < Mat.size()) && Mat [Ligne][NumCol] == CaracRecherche)
-		{
-			++Ligne;
-		}
-		// cout << (4 == Ligne-NumLi);
-		return (4 == Ligne - NumLi);
-	} // TestVictoireColonne ()
+		const char KCarAInspecter = (CoupDuJoueur1 ? 'X' : 'O');
+		if (NumLi > 3) return false;
 
-    int maximum(int a,int b)
-    {
-        if(a>b)
-        return a;
-        else
-        return b;
-    } // Maximum ()
+		unsigned Li (NumLi + 1);
+
+		while ((Li < Mat.size ()) && Mat [Li][NumCol] == KCarAInspecter)
+			++Li;
+
+		return (4 == Li - NumLi);
+	} //TestVictoireColonne ()
 
 	bool TestVictoireLigne (const CVMatrice & Mat, const unsigned NumLi, const unsigned NumCol, const bool CoupDuJoueur1)
 	{
 		char CaracRecherche;
-		if (CoupDuJoueur1)
-		{
-			CaracRecherche = 'X';
-		}
-		else
-		{
-			CaracRecherche = 'O';
-		}
+		CaracRecherche = (CoupDuJoueur1 ? 'X' : 'O');
 		unsigned NbInspections;
 		if (NumCol < Mat.size() /2)
 		{
@@ -227,7 +225,7 @@ namespace
 		{
 		    NbInspections = Mat.size () - NumCol;
 		}
-		int PosDepart = maximum (0, int(NumCol - Mat.size () /2));
+		int PosDepart = max (0, int(NumCol - Mat.size () /2));
 		for (unsigned i = 0;  i < NbInspections; ++i)
 		{
 			unsigned NbCorrespondances = 0;
@@ -251,28 +249,35 @@ namespace
 			Carac = 'O';
 		}
 
-		unsigned NumLiT (3);
-		unsigned NumColT (0);
-		unsigned NBCorespondances (0);
-
-		while (true)
+		unsigned NumLi (6);
+		unsigned Li;
+		unsigned Col;
+		unsigned NBCorespondances;
+		for (unsigned NumCol = 0; NumCol < 4; ++NumCol)
 		{
-
-			while (Mat [NumLiT][NumColT] == Carac)
+			while (NumLi > 0)
 			{
-				if (NBCorespondances == 4) return true;
-				--NumLiT;
-				++NumColT;
+				Li = NumLi;
+				Col = NumCol;
+				NBCorespondances = 0;
+				while (Mat [Li][Col] == Carac)
+				{
+					--Li;
+					++Col;
 
 
-				if (NumLiT == 0) break;
-				++ NBCorespondances;
-			} // END WHILE 2
+					++ NBCorespondances;
+					if (NBCorespondances == 4) return true;
+					if (Li == 0) break;
+
+				} // END WHILE 2
 
 
-			++NumLiT;
-			if (NumLiT == 6) return false;
-		} // END WHILE 1
+				--NumLi;
+				if (Li == 2) break;
+			} // END WHILE 1
+		} // END FOR
+		return false;
 
 	} // TestVictoireDiagonaleCroissante ()
 
@@ -283,30 +288,36 @@ namespace
 		CVLigne L;          //
 		L.reserve (7);      //
 		CVMatrice M (7, L); // Déclaration d'une matrice M7 vide
-		InitMat (M);        // Remplissage avec des '.'
-		AffichePuissance4 (M); // Affichage de la matrice accompagnée de '-' et des noms des colonnes
+		InitMat (M);        // Remplissage avec des ' '
+		AffichePuissance4 (M); // Affichage de la matrice accompagnée des noms des colonnes
 	    unsigned Point1 = 0;
 		unsigned Point2 = 0;
 		AfficheScore (Point1, Point2); // Ici le score vaut toujours O à O
 		unsigned NumLigne;
 		char Choix;
 		bool Joueur = true;
-		for (unsigned NbCase = 0; ; ++NbCase)
+		unsigned NbCase = 0;
+		while(true)
 		{
 			string Saisie;	//Variable qui stockera ce qui est saisie au clavier
 			string NomJoueur;
+			string Nom;
 			while (true)
 			{
 				if((!Joueur + 1) ==1)
 				{
+					Couleur(KJaune);
 					NomJoueur = J1;
+					Nom = J1;
 				}
 				else
 				{
+					Couleur(KRouge);
 					NomJoueur = J2;
+					Nom = J2;
 				}
 				//cout << "\n\nJoueur " << !Joueur + 1 << "  :  Dans quelle colonne voulez vous placer le pion? ";
-				cout << "\n\n"<< NomJoueur << "  :  Dans quelle colonne voulez vous placer le pion? ";
+				cout << "\n\n"<< Nom << "  :  Dans quelle colonne voulez vous placer le pion? ";
 				getline(cin,Saisie);
 				Choix = Saisie [0];		//On garde que le premier caractère saisi
 				Choix = toupper(Choix);
@@ -319,8 +330,9 @@ namespace
 				if (Choix == 'F') break;
 				if (Choix == 'G') break;
 				cout << "La colonne n'existe pas" << endl;
+				Couleur(KReset);
 			} // END TRUE
-			PositionneJeton (M, Choix - 'A', NumLigne, Joueur, NbCoups1, NbCoups2); // Placement du pion dans la matrice
+			PositionneJeton (M, Choix - 'A', NumLigne, Joueur, NbCoups1, NbCoups2, NbCase); // Placement du pion dans la matrice
 			if ((TestVictoireColonne (M, NumLigne, Choix - 'A', Joueur)) ||
 				(TestVictoireLigne (M, NumLigne, Choix - 'A', Joueur)) ||
 				(TestVictoireDiagonaleCroissante(M, Joueur)))
@@ -329,25 +341,28 @@ namespace
 				if (Joueur)
 				{
 				    ++Point1;
+				    NbCase = 0;
 				}
 				else
 				{
 				    ++Point2;
+				    NbCase = 0;
 				}
 				InitMat (M); //Réinitialisation la grille
 			}
 
 			AffichePuissance4 (M); //Actualisation de la grille après coups
 			AfficheScore (Point1, Point2); // Affichage du score
+			cout << "\nPlus que " << 49-NbCase;
 			if(Point1 == 3)
 			{
-				cout << "\n\n" << NomJoueur << "a gagné la partie en " << NbCoups1
+				cout << "\n\n" << Nom << "a gagné la partie en " << NbCoups1
 					 << " coups!\n";
 				break; // Fin de la partie
 			}
 			if(Point2 == 3)
 			{
-			    cout << "\n\n" << NomJoueur << "a gagné la partie en " << NbCoups2
+			    cout << "\n\n" << Nom << "a gagné la partie en " << NbCoups2
 					 << " coups!\n";
 			    break; //Fin de la partie
 			}
@@ -357,7 +372,7 @@ namespace
 			if (NbCase == 49)
 			{
 			cout << endl << endl << "Match Nul !" << endl;
-			break; //Fin de la partie
+			continue; //Fin de la partie
 			}
 
 		}
